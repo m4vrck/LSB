@@ -213,6 +213,14 @@
     backdrop-filter:blur(10px);
     border-bottom-color:var(--line-on-dark);
   }
+  /* Detail/legal sub-pages (Terms, Practice Areas) have a dark background all the way
+     up, so the header needs its light "scrolled" look right away, not just after scroll. */
+  body.legal-open header.nav{
+    padding:14px 0;
+    background:rgba(247,243,233,.92);
+    backdrop-filter:blur(10px);
+    border-bottom-color:var(--line-on-dark);
+  }
   .nav-row{ display:flex; align-items:center; justify-content:space-between; gap:24px; }
   .brand{ display:flex; align-items:center; gap:12px; color:var(--ivory); }
   .brand-logo{
@@ -268,7 +276,7 @@
   }
   .nav-dropdown-panel a, .nav-dropdown-panel button.linklike-panel{
     display:block; width:100%; text-align:left; background:none; border:0;
-    font-family:var(--sans); font-size:.9rem; color:var(--ink);
+    font-family:var(--sans); font-size:.9rem; color:var(--ivory);
     padding:.55rem .7rem; border-radius:8px; cursor:pointer;
   }
   .nav-dropdown-panel a:hover, .nav-dropdown-panel button.linklike-panel:hover{
@@ -303,6 +311,7 @@
     position:fixed; inset:0; background:linear-gradient(165deg, #ffffff 0%, #f2ecdd 100%); z-index:55;
     display:flex; flex-direction:column; justify-content:center;
     padding:32px clamp(20px,6vw,56px);
+    overflow-y:auto;
     transform:translateY(-100%);
     transition:transform .5s var(--ease);
   }
@@ -626,41 +635,67 @@
     *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
   }
 
-  /* ---------- TERMS & CONDITIONS (own page-like section) ---------- */
+  /* ---------- TERMS / DETAIL PAGES (own page-like sections) ---------- */
   #siteMain{ display:block; }
   #siteMain.is-hidden{ display:none; }
-  #terms{
+  .legal-page{
     display:none;
     padding:clamp(140px,16vw,180px) 0 clamp(64px,8vw,110px);
   }
-  #terms.is-active{ display:block; }
-  #terms .back-link{
+  .legal-page.is-active{ display:block; }
+  .legal-page .back-link{
     display:inline-flex; align-items:center; gap:.5em;
     font-family:var(--sans); font-size:.88rem; font-weight:600;
     color:var(--muted-on-light); margin-bottom:1.6rem;
   }
-  #terms .back-link:hover{ color:var(--bronze-dim); }
-  #terms .eyebrow{ display:block; margin-bottom:.9rem; }
-  #terms h1{ font-size:clamp(2.2rem,5vw,3.6rem); max-width:18ch; }
-  #terms .updated{ margin-top:1rem; margin-bottom:2.8rem; font-size:1.02rem; color:var(--muted-on-light); max-width:60ch; }
-  #terms .legal-content{ max-width:760px; }
-  #terms .legal-content > .intro{ font-size:1.08rem; line-height:1.7; margin-bottom:2.4rem; color:var(--ink); }
-  #terms .legal-content section{ margin-bottom:2.4rem; }
-  #terms .legal-content h3{
+  .legal-page .back-link:hover{ color:var(--bronze-dim); }
+  .legal-page .eyebrow{ display:block; margin-bottom:.9rem; }
+  .legal-page h1{ font-size:clamp(2.2rem,5vw,3.6rem); max-width:18ch; }
+  .legal-page .updated{ margin-top:1rem; margin-bottom:2.8rem; font-size:1.02rem; color:var(--muted-on-light); max-width:60ch; }
+  .legal-page .legal-content{ max-width:760px; }
+  .legal-page .legal-content > .intro{ font-size:1.08rem; line-height:1.7; margin-bottom:2.4rem; color:var(--ink); }
+  .legal-page .legal-content section{ margin-bottom:2.4rem; }
+  .legal-page .legal-content h3{
     font-family:var(--serif); font-weight:500; font-size:1.4rem;
     margin-bottom:1rem; color:var(--ink);
   }
-  #terms .legal-content p{
+  .legal-page .legal-content p{
     font-size:1rem; line-height:1.75; color:var(--muted-on-light);
     margin-bottom:1rem;
   }
-  #terms .legal-content ul, #terms .legal-content ol{ margin:0 0 1rem; padding-left:1.4rem; }
-  #terms .legal-content ul{ list-style:disc; }
-  #terms .legal-content li{
+  .legal-page .legal-content ul, .legal-page .legal-content ol{ margin:0 0 1rem; padding-left:1.4rem; }
+  .legal-page .legal-content ul{ list-style:disc; }
+  .legal-page .legal-content li{
     font-size:1rem; line-height:1.7; color:var(--muted-on-light);
     margin-bottom:.5rem; padding-left:.3rem;
   }
-  #terms .legal-content strong{ color:var(--ink); font-weight:600; }
+  .legal-page .legal-content strong{ color:var(--ink); font-weight:600; }
+
+  /* Detail-page specific: sub-service list + CTA */
+  .detail-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:.7rem 2.2rem;
+    max-width:760px; margin:0 0 2.6rem;
+  }
+  .detail-grid a{
+    font-size:.98rem; color:var(--muted-on-light); padding:.75rem 1rem;
+    border:1px solid var(--line-on-light); border-radius:8px;
+    transition:border-color .3s var(--ease), color .3s var(--ease), background .3s var(--ease);
+  }
+  .detail-grid a:hover{ border-color:var(--bronze-soft); color:var(--ink); background:rgba(156,63,199,.06); }
+  .detail-cta{
+    margin-top:1rem; padding-top:2.2rem; border-top:1px solid var(--line-on-light);
+    display:flex; flex-wrap:wrap; align-items:center; gap:1.4rem 2rem;
+  }
+  .detail-cta p{ font-size:1.02rem; color:var(--ink); max-width:44ch; margin:0; }
+  .practice-link{
+    display:inline-flex; align-items:center; gap:.45em;
+    font-size:.86rem; font-weight:600; color:var(--bronze-soft);
+    margin-top:.9rem;
+  }
+  .practice-link:hover{ color:var(--bronze-dim); }
+  @media (max-width:640px){
+    .detail-grid{ grid-template-columns:1fr; }
+  }
 </style>
 </head>
 <body>
@@ -682,8 +717,11 @@
       <div class="nav-item-dropdown">
         <button type="button" aria-haspopup="true" aria-expanded="false">Legal <span class="chevron"></span></button>
         <div class="nav-dropdown-panel">
+          <a href="#practice-family" class="js-open-page" data-page="practice-family">Family &amp; Personal</a>
+          <a href="#practice-property" class="js-open-page" data-page="practice-property">Property &amp; Documentation</a>
+          <a href="#practice-civil" class="js-open-page" data-page="practice-civil">Civil, Criminal &amp; Consumer</a>
           <button type="button" class="linklike-panel" id="openDisclaimerNav">Disclaimer</button>
-          <a href="#terms" class="js-open-terms">Terms &amp; Conditions</a>
+          <a href="#terms" class="js-open-terms js-open-page" data-page="terms">Terms &amp; Conditions</a>
         </div>
       </div>
     </nav>
@@ -705,8 +743,11 @@
   <a href="#faqs" data-close>FAQs</a>
   <a href="#contact" data-close>Contact</a>
   <div class="mobile-legal">
+    <a href="#practice-family" data-close class="js-open-page" data-page="practice-family">Family &amp; Personal</a>
+    <a href="#practice-property" data-close class="js-open-page" data-page="practice-property">Property &amp; Documentation</a>
+    <a href="#practice-civil" data-close class="js-open-page" data-page="practice-civil">Civil, Criminal &amp; Consumer</a>
     <button type="button" id="openDisclaimerMobile">Disclaimer</button>
-    <a href="#terms" data-close class="js-open-terms">Terms &amp; Conditions</a>
+    <a href="#terms" data-close class="js-open-terms js-open-page" data-page="terms">Terms &amp; Conditions</a>
   </div>
   <a class="btn btn-primary" href="tel:+919981036131">Speak With Us</a>
 </div>
@@ -783,7 +824,7 @@
     </div>
 
     <div class="practice-list">
-      <details class="practice-item" open>
+      <details class="practice-item">
         <summary>
           <span class="pi-left">
             <span class="pi-num">01</span>
@@ -806,6 +847,7 @@
             <span>Premarital Verification</span>
             <span>Name Change Gazette</span>
           </div>
+          <a href="#practice-family" class="practice-link js-open-page" data-page="practice-family">Explore Family &amp; Personal Matters &rarr;</a>
         </div>
       </details>
 
@@ -833,6 +875,7 @@
             <span>Lease Agreement</span>
             <span>Rent Agreement</span>
           </div>
+          <a href="#practice-property" class="practice-link js-open-page" data-page="practice-property">Explore Property &amp; Documentation &rarr;</a>
         </div>
       </details>
 
@@ -857,6 +900,7 @@
             <span>Consumer Cases</span>
             <span>Defamation Cases</span>
           </div>
+          <a href="#practice-civil" class="practice-link js-open-page" data-page="practice-civil">Explore Civil, Criminal &amp; Consumer &rarr;</a>
         </div>
       </details>
     </div>
@@ -1007,7 +1051,7 @@
 <!-- ============ TERMS & CONDITIONS ============ -->
 <section class="legal-page on-ivory" id="terms">
   <div class="container">
-    <a href="#home" class="back-link" id="termsBackLink">&larr; Back to Home</a>
+    <a href="#home" class="back-link js-close-page" data-scroll="home">&larr; Back to Home</a>
     <span class="eyebrow">Legal</span>
     <h1>Terms and Conditions</h1>
     <p class="updated">Welcome to Legal Services Bhopal! These terms and conditions outline the rules and regulations for the use of Legal Services Bhopal's website.</p>
@@ -1102,6 +1146,225 @@
   </div>
 </section>
 
+<!-- ============ PRACTICE AREA: FAMILY & PERSONAL ============ -->
+<section class="legal-page on-ivory" id="practice-family">
+  <div class="container">
+    <a href="#practice-areas" class="back-link js-close-page" data-scroll="practice-areas">&larr; Back to Practice Areas</a>
+    <span class="eyebrow">Practice Area</span>
+    <h1>Family &amp; Personal Matters</h1>
+    <p class="updated">Sensitive, personal, and often time-critical — our family law team in Bhopal handles these matters with discretion, care, and a clear plan of action from the first consultation.</p>
+    <div class="legal-content">
+      <p class="intro">Disputes within a family rarely follow a script. Whether you are seeking a peaceful separation, protecting a child's welfare, or simply want a document verified before a big decision, our advocates guide you through the procedure at the Family Court and District Court in Bhopal step by step, while keeping the human side of the matter front and centre.</p>
+
+      <div class="detail-grid" aria-label="Jump to a service">
+        <a href="#svc-family-dispute" class="js-jump">Family Dispute Cases</a>
+        <a href="#svc-maintenance" class="js-jump">Maintenance Cases</a>
+        <a href="#svc-court-marriage" class="js-jump">Court Marriage</a>
+        <a href="#svc-domestic-violence" class="js-jump">Domestic Violence</a>
+        <a href="#svc-dowry" class="js-jump">Dowry Complaint</a>
+        <a href="#svc-divorce" class="js-jump">Divorce</a>
+        <a href="#svc-child-custody" class="js-jump">Child Custody</a>
+        <a href="#svc-premarital" class="js-jump">Premarital Verification</a>
+        <a href="#svc-name-change" class="js-jump">Name Change Gazette</a>
+      </div>
+
+      <section id="svc-family-dispute">
+        <h3>Family Dispute Cases</h3>
+        <p>Not every disagreement needs to end in court, but when mediation fails, we represent clients in maintenance, property, and guardianship disputes between spouses, siblings, and extended family. We start by understanding the full background of the relationship before recommending litigation, so the approach fits the family, not the other way around.</p>
+      </section>
+
+      <section id="svc-maintenance">
+        <h3>Maintenance Cases</h3>
+        <p>Applications under Section 125 CrPC (now Section 144 of the BNSS) and related family law provisions for spousal, child, or parental maintenance are drafted with supporting financial documentation to give the claim the best chance in court. We also assist on the respondent's side, ensuring any order reflects genuine income and obligations.</p>
+      </section>
+
+      <section id="svc-court-marriage">
+        <h3>Court Marriage</h3>
+        <p>We handle registration under the Special Marriage Act and the Hindu Marriage Act, including document preparation, notice period compliance, and appearance before the Marriage Officer, so couples can complete the legal formalities smoothly and without unnecessary delay.</p>
+      </section>
+
+      <section id="svc-domestic-violence">
+        <h3>Domestic Violence</h3>
+        <p>We represent aggrieved persons under the Protection of Women from Domestic Violence Act, 2005 — securing protection orders, residence orders, and interim maintenance — and act with urgency where safety is a concern. We also defend clients wrongly implicated, ensuring due process is followed at every stage.</p>
+      </section>
+
+      <section id="svc-dowry">
+        <h3>Dowry Complaint</h3>
+        <p>Complaints and defences under Section 498A IPC (now Section 85 BNS) and the Dowry Prohibition Act require careful, fact-specific handling. We advise on filing a complaint with the right evidence, or on responding to one, always keeping in mind the long-term implications for the family involved.</p>
+      </section>
+
+      <section id="svc-divorce">
+        <h3>Divorce</h3>
+        <p>From mutual consent divorce under Section 13B of the Hindu Marriage Act to contested proceedings on grounds such as cruelty or desertion, we manage the paperwork, timelines, and court appearances, and work toward the fastest resolution the circumstances allow — including settlement of alimony and asset division.</p>
+      </section>
+
+      <section id="svc-child-custody">
+        <h3>Child Custody</h3>
+        <p>Custody and visitation matters are argued with the child's welfare as the central concern, supported by home study reports, school records, and, where relevant, the child's own preference as recognised by the court. We also assist with guardianship applications under the Guardians and Wards Act.</p>
+      </section>
+
+      <section id="svc-premarital">
+        <h3>Premarital Verification</h3>
+        <p>Background and document verification — marital status, litigation history, property, and identity checks — gives families clarity before a marriage is finalised. Reports are compiled discreetly and shared only with the client.</p>
+      </section>
+
+      <section id="svc-name-change">
+        <h3>Name Change Gazette</h3>
+        <p>We prepare and file the affidavit, newspaper publication, and Gazette of India notification required for a legal change of name, and assist with updating the change across PAN, Aadhaar, passport, and other official records afterward.</p>
+      </section>
+    </div>
+
+    <div class="detail-cta">
+      <p>Every family matter is different — tell us what you're facing and we'll outline the options honestly, before any court filing.</p>
+      <a href="#contact" class="btn btn-primary js-close-page" data-scroll="contact">Book a Consultation</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRACTICE AREA: PROPERTY & DOCUMENTATION ============ -->
+<section class="legal-page on-ivory" id="practice-property">
+  <div class="container">
+    <a href="#practice-areas" class="back-link js-close-page" data-scroll="practice-areas">&larr; Back to Practice Areas</a>
+    <span class="eyebrow">Practice Area</span>
+    <h1>Property &amp; Documentation</h1>
+    <p class="updated">A weak document today is a dispute tomorrow. We draft, vet, and register property and business documents in Bhopal so that what is agreed on paper actually holds up if it is ever tested.</p>
+    <div class="legal-content">
+      <p class="intro">Whether you're buying your first flat, transferring ancestral land, drawing up a builder agreement, or simply want peace of mind that a deed is enforceable, our team combines title due diligence with hands-on experience at the Sub-Registrar's office in Bhopal to keep the paperwork clean from the outset.</p>
+
+      <div class="detail-grid" aria-label="Jump to a service">
+        <a href="#svc-property-registry" class="js-jump">Property Registry</a>
+        <a href="#svc-transfer" class="js-jump">Transfer of Property</a>
+        <a href="#svc-will" class="js-jump">Will Registration</a>
+        <a href="#svc-agreements" class="js-jump">Agreements</a>
+        <a href="#svc-builder" class="js-jump">Builder Joint Agreements</a>
+        <a href="#svc-partnership" class="js-jump">Partnership Deed</a>
+        <a href="#svc-poa" class="js-jump">Power of Attorney</a>
+        <a href="#svc-gift" class="js-jump">Gift Deed</a>
+        <a href="#svc-lease" class="js-jump">Lease Agreement</a>
+        <a href="#svc-rent" class="js-jump">Rent Agreement</a>
+      </div>
+
+      <section id="svc-property-registry">
+        <h3>Property Registry</h3>
+        <p>We conduct title verification, check for encumbrances, and manage the full sale-deed registration process at the Sub-Registrar's office, including stamp duty calculation and coordination with the seller, buyer, and any lender involved.</p>
+      </section>
+
+      <section id="svc-transfer">
+        <h3>Transfer of Property</h3>
+        <p>Sale, exchange, mortgage, and inheritance-based transfers under the Transfer of Property Act are documented and registered correctly the first time, avoiding the delays and disputes that come from defective mutation records.</p>
+      </section>
+
+      <section id="svc-will">
+        <h3>Will Registration</h3>
+        <p>We draft wills that clearly reflect your intent, advise on executor appointment, and handle registration to reduce the chance of challenge later — along with guidance for legal heirs on probate and succession where needed.</p>
+      </section>
+
+      <section id="svc-agreements">
+        <h3>Agreements</h3>
+        <p>General commercial and personal agreements — sale agreements, MOUs, service contracts, and settlement agreements — are drafted with clear terms, timelines, and remedies, so both sides know exactly what they've committed to.</p>
+      </section>
+
+      <section id="svc-builder">
+        <h3>Builder Joint Agreements</h3>
+        <p>Joint development and builder-owner agreements are reviewed clause by clause for construction timelines, area-sharing ratios, penalty clauses, and possession terms, protecting landowners from one-sided drafting common in these deals.</p>
+      </section>
+
+      <section id="svc-partnership">
+        <h3>Partnership Deed</h3>
+        <p>We draft and register partnership deeds covering profit-sharing, capital contribution, decision-making authority, and exit terms, and assist with the corresponding filings so the firm is properly constituted from day one.</p>
+      </section>
+
+      <section id="svc-poa">
+        <h3>Power of Attorney</h3>
+        <p>General and special power of attorney documents are prepared for property transactions, banking, or representation while abroad or unavailable, with the scope of authority defined precisely to prevent misuse.</p>
+      </section>
+
+      <section id="svc-gift">
+        <h3>Gift Deed</h3>
+        <p>Transfers of property by gift — often within families — are documented and registered in line with the Transfer of Property Act, with appropriate stamp duty and clear, unconditional language to avoid future challenge.</p>
+      </section>
+
+      <section id="svc-lease">
+        <h3>Lease Agreement</h3>
+        <p>Long-term lease agreements for residential, commercial, or agricultural property are drafted to cover tenure, renewal, maintenance responsibility, and termination conditions, protecting both lessor and lessee.</p>
+      </section>
+
+      <section id="svc-rent">
+        <h3>Rent Agreement</h3>
+        <p>Standard and registered rent agreements are prepared quickly, with rent escalation, security deposit, notice period, and maintenance terms clearly stated — and registration handled where the tenure requires it.</p>
+      </section>
+    </div>
+
+    <div class="detail-cta">
+      <p>Have a deed or agreement that needs drafting or a second opinion? Bring it in — we'll review it before you sign anything.</p>
+      <a href="#contact" class="btn btn-primary js-close-page" data-scroll="contact">Book a Consultation</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRACTICE AREA: CIVIL, CRIMINAL & CONSUMER ============ -->
+<section class="legal-page on-ivory" id="practice-civil">
+  <div class="container">
+    <a href="#practice-areas" class="back-link js-close-page" data-scroll="practice-areas">&larr; Back to Practice Areas</a>
+    <span class="eyebrow">Practice Area</span>
+    <h1>Civil, Criminal &amp; Consumer</h1>
+    <p class="updated">From a bounced cheque to a road accident claim, most disputes are urgent and time-bound. We move quickly to protect your position, whether you are filing a case or defending one.</p>
+    <div class="legal-content">
+      <p class="intro">Our litigation practice covers the District and Sessions Courts, Consumer Commissions, and Motor Accident Claims Tribunal in Bhopal. We assess the merits honestly at the outset, so you know whether to pursue a claim, negotiate a settlement, or contest one being brought against you.</p>
+
+      <div class="detail-grid" aria-label="Jump to a service">
+        <a href="#svc-civil-criminal" class="js-jump">Civil &amp; Criminal Cases</a>
+        <a href="#svc-tenant" class="js-jump">Tenant Eviction Cases</a>
+        <a href="#svc-accident" class="js-jump">Motor Accident Cases</a>
+        <a href="#svc-cheque" class="js-jump">Cheque Bounce Cases</a>
+        <a href="#svc-cyber" class="js-jump">Cyber Crime Cases</a>
+        <a href="#svc-consumer" class="js-jump">Consumer Cases</a>
+        <a href="#svc-defamation" class="js-jump">Defamation Cases</a>
+      </div>
+
+      <section id="svc-civil-criminal">
+        <h3>Civil &amp; Criminal Cases</h3>
+        <p>We appear for both complainants and the accused across civil suits and criminal matters — from bail applications and FIR quashing to recovery suits and injunctions — building the case on evidence and procedure rather than promises of an outcome.</p>
+      </section>
+
+      <section id="svc-tenant">
+        <h3>Tenant Eviction Cases</h3>
+        <p>Landlords seeking possession on grounds of default, bona fide need, or lease expiry are guided through the correct notice and filing procedure, while tenants facing eviction are advised on their rights and available defences.</p>
+      </section>
+
+      <section id="svc-accident">
+        <h3>Motor Accident Cases</h3>
+        <p>Compensation claims before the Motor Accident Claims Tribunal are supported with medical records, income proof, and accident documentation to secure a fair award for injury, disability, or loss of life, and we assist insurers and drivers on the defence side as well.</p>
+      </section>
+
+      <section id="svc-cheque">
+        <h3>Cheque Bounce Cases</h3>
+        <p>Complaints under Section 138 of the Negotiable Instruments Act are filed with the statutory demand notice and timelines strictly observed, giving the complaint its best chance of surviving procedural objections — and we defend clients facing such complaints too.</p>
+      </section>
+
+      <section id="svc-cyber">
+        <h3>Cyber Crime Cases</h3>
+        <p>Online fraud, identity theft, harassment, and data breaches are handled from the initial police complaint through to trial, with coordination with the cyber cell where digital evidence needs to be preserved and analysed.</p>
+      </section>
+
+      <section id="svc-consumer">
+        <h3>Consumer Cases</h3>
+        <p>Complaints before the District, State, or National Consumer Commissions — for deficient service, defective products, or unfair trade practices — are drafted with the evidence and valuation needed to claim compensation and refunds effectively.</p>
+      </section>
+
+      <section id="svc-defamation">
+        <h3>Defamation Cases</h3>
+        <p>Civil and criminal defamation matters, including online and reputational harm, are pursued or defended with careful attention to what is provable versus what is merely alleged, since defamation claims turn heavily on evidence.</p>
+      </section>
+    </div>
+
+    <div class="detail-cta">
+      <p>Time limits matter in most of these matters — the sooner we look at your case, the more options you have.</p>
+      <a href="#contact" class="btn btn-primary js-close-page" data-scroll="contact">Book a Consultation</a>
+    </div>
+  </div>
+</section>
+
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="container">
@@ -1133,9 +1396,9 @@
       </div>
       <div class="foot-col reveal reveal-blur">
         <h4>Practice Areas</h4>
-        <a href="#practice-areas">Family &amp; Personal</a>
-        <a href="#practice-areas">Property &amp; Documentation</a>
-        <a href="#practice-areas">Civil, Criminal &amp; Consumer</a>
+        <a href="#practice-family" class="js-open-page" data-page="practice-family">Family &amp; Personal</a>
+        <a href="#practice-property" class="js-open-page" data-page="practice-property">Property &amp; Documentation</a>
+        <a href="#practice-civil" class="js-open-page" data-page="practice-civil">Civil, Criminal &amp; Consumer</a>
       </div>
       <div class="foot-col reveal reveal-blur">
         <h4>Contact</h4>
@@ -1148,7 +1411,7 @@
       <span>&copy; <span id="year"></span> Legal Services Bhopal. All rights reserved.</span>
       <span class="links">
         <button class="linklike" id="openDisclaimer">Disclaimer</button>
-        <a href="#terms" class="js-open-terms" style="font-size:.84rem; color:var(--muted-on-dark); text-decoration:underline; text-underline-offset:3px;">Terms &amp; Conditions</a>
+        <a href="#terms" class="js-open-terms js-open-page" data-page="terms" style="font-size:.84rem; color:var(--muted-on-dark); text-decoration:underline; text-underline-offset:3px;">Terms &amp; Conditions</a>
       </span>
     </div>
   </div>
@@ -1249,41 +1512,79 @@
   }
   wireModal(['openDisclaimer', 'openDisclaimerNav', 'openDisclaimerMobile'], 'disclaimerModal');
 
-  // Terms & Conditions "page" toggle (stays on the same site/file)
+  // Sub-page ("Terms", "Practice Area" detail pages) toggle — stays on the same site/file
   var siteMain = document.getElementById('siteMain');
-  var termsSection = document.getElementById('terms');
+  var pageIds = ['terms', 'practice-family', 'practice-property', 'practice-civil'];
+  var pageSections = {};
+  pageIds.forEach(function(id){ pageSections[id] = document.getElementById(id); });
 
-  function renderTerms(){
+  function openPage(id){
+    if (!pageSections[id]) return;
+    pageIds.forEach(function(pid){
+      if (pageSections[pid]) pageSections[pid].classList.toggle('is-active', pid === id);
+    });
     siteMain.classList.add('is-hidden');
-    termsSection.classList.add('is-active');
+    document.body.classList.add('legal-open');
     window.scrollTo(0, 0);
   }
-  function renderMain(){
-    termsSection.classList.remove('is-active');
+  function closePage(scrollToId){
+    pageIds.forEach(function(pid){
+      if (pageSections[pid]) pageSections[pid].classList.remove('is-active');
+    });
     siteMain.classList.remove('is-hidden');
+    document.body.classList.remove('legal-open');
+    if (scrollToId) {
+      var target = document.getElementById(scrollToId);
+      if (target) {
+        // Let siteMain become visible first, then scroll to the anchor.
+        requestAnimationFrame(function(){ target.scrollIntoView({ block: 'start' }); });
+        return;
+      }
+    }
     window.scrollTo(0, 0);
+  }
+  function currentPageFromHash(){
+    var hash = window.location.hash.replace('#', '');
+    return pageIds.indexOf(hash) !== -1 ? hash : null;
   }
 
-  document.querySelectorAll('.js-open-terms').forEach(function(link){
+  document.querySelectorAll('.js-open-page').forEach(function(link){
     link.addEventListener('click', function(e){
       e.preventDefault();
+      var id = link.getAttribute('data-page');
       closeMenu();
-      renderTerms();
-      history.pushState(null, '', '#terms');
+      openPage(id);
+      history.pushState(null, '', '#' + id);
     });
   });
-  var termsBackLink = document.getElementById('termsBackLink');
-  if (termsBackLink) termsBackLink.addEventListener('click', function(e){
-    e.preventDefault();
-    renderMain();
-    history.pushState(null, '', '#home');
+
+  document.querySelectorAll('.js-close-page').forEach(function(link){
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      var scrollTo = link.getAttribute('data-scroll') || 'home';
+      closeMenu();
+      closePage(scrollTo);
+      history.pushState(null, '', '#' + scrollTo);
+    });
   });
 
-  if (window.location.hash === '#terms') renderTerms();
+  // In-page "jump to service" links inside a detail page: smooth scroll, no hash change.
+  document.querySelectorAll('.js-jump').forEach(function(link){
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      var targetId = link.getAttribute('href').replace('#', '');
+      var target = document.getElementById(targetId);
+      if (target) target.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    });
+  });
+
+  var initialPage = currentPageFromHash();
+  if (initialPage) openPage(initialPage);
 
   window.addEventListener('popstate', function(){
-    if (window.location.hash === '#terms') renderTerms();
-    else renderMain();
+    var pid = currentPageFromHash();
+    if (pid) openPage(pid);
+    else closePage();
   });
 </script>
 </body>
